@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-BASE_URL="http://localhost:8080/api/v1"
+BASE_URL="http://localhost:8081/api/v1"
 ADMIN_EMAIL="admin@biblioteca.com"
 ADMIN_PASS="Admin123*"
 USER_EMAIL="lector@biblioteca.com"
