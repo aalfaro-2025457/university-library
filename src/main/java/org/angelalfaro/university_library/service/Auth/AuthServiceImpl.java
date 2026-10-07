@@ -38,11 +38,13 @@ public class AuthServiceImpl implements IAuthService {
             throw new BusinessRuleException("Email is already registered");
         }
 
+        Rol rol = request.getRole() != null ? request.getRole() : Rol.LECTOR;
+
         Usuario user = Usuario.builder()
                 .nombre(request.getNombre())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .rol(Rol.LECTOR)
+                .rol(rol)
                 .build();
 
         usuarioRepository.save(user);

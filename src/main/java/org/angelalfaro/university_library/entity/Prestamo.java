@@ -61,7 +61,7 @@ public class Prestamo {
         private LocalDate fechaPrestamo;
         private LocalDate fechaDevolucionEsperada;
         private LocalDate fechaDevolucionReal;
-        private EstadoPrestamo estado;
+        private EstadoPrestamo estado = EstadoPrestamo.ACTIVO;
 
         PrestamoBuilder() {
         }

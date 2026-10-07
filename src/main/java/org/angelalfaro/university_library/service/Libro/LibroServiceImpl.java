@@ -23,7 +23,11 @@ public class LibroServiceImpl implements ILibroService {
     @Override
     @Transactional(readOnly = true)
     public Page<LibroResponseDto> findAll(String titulo, String categoria, Pageable pageable) {
-        return libroRepository.findByFilters(titulo, categoria, pageable)
+        // El patrón LIKE se construye aquí para no depender de CONCAT() en el JPQL:
+        // Hibernate 7 lo traduce a '||' de PostgreSQL y, combinado con lower(),
+        // causa el error "function lower(bytea) does not exist".
+        String tituloPattern = (titulo == null || titulo.isBlank()) ? null : "%" + titulo.trim() + "%";
+        return libroRepository.findByFilters(tituloPattern, categoria, pageable)
                 .map(this::mapToDto);
     }
 

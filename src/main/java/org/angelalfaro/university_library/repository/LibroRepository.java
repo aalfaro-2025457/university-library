@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 public interface LibroRepository extends JpaRepository<Libro, Long> {
 
     @Query("SELECT l FROM Libro l WHERE " +
-            "(:titulo IS NULL OR LOWER(l.titulo) LIKE LOWER(CONCAT('%', :titulo, '%'))) AND " +
-            "(:categoria IS NULL OR LOWER(l.categoria) = LOWER(:categoria))")
+            "LOWER(l.titulo) LIKE LOWER(COALESCE(:titulo, l.titulo)) AND " +
+            "LOWER(l.categoria) = LOWER(COALESCE(:categoria, l.categoria))")
     Page<Libro> findByFilters(@Param("titulo") String titulo,
                               @Param("categoria") String categoria,
                               Pageable pageable);

@@ -39,7 +39,7 @@ public class Usuario implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private Rol rol = Rol.LECTOR;
+    private Rol rol;
 
     public Usuario(Long id, String nombre, String email, String password, EstadoUsuario estado, Rol rol) {
         this.id = id;
@@ -81,7 +81,7 @@ public class Usuario implements UserDetails {
         private String nombre;
         private String email;
         private String password;
-        private EstadoUsuario estado;
+        private EstadoUsuario estado = EstadoUsuario.ACTIVO;
         private Rol rol;
 
         UsuarioBuilder() {
