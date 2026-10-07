@@ -1,7 +1,6 @@
 package org.angelalfaro.university_library.service.Auth;
 
 
-import lombok.RequiredArgsConstructor;
 import org.angelalfaro.university_library.dto.Auth.AuthResponse;
 import org.angelalfaro.university_library.dto.Auth.LoginRequest;
 import org.angelalfaro.university_library.dto.Auth.RegisterRequest;
@@ -18,13 +17,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 public class AuthServiceImpl implements IAuthService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+
+    public AuthServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
+    }
 
     @Override
     @Transactional

@@ -1,7 +1,6 @@
 package org.angelalfaro.university_library.controller;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.angelalfaro.university_library.dto.Prestamo.PrestamoRequestDto;
 import org.angelalfaro.university_library.dto.Prestamo.PrestamoResponseDto;
 import org.angelalfaro.university_library.entity.Usuario;
@@ -15,10 +14,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/prestamos")
-@RequiredArgsConstructor
 public class PrestamoController {
 
     private final PrestamoServiceImpl prestamoService;
+
+    public PrestamoController(PrestamoServiceImpl prestamoService) {
+        this.prestamoService = prestamoService;
+    }
 
     @PostMapping
     public ResponseEntity<PrestamoResponseDto> registrarPrestamo(@Valid @RequestBody PrestamoRequestDto request) {

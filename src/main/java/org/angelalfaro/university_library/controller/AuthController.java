@@ -1,7 +1,6 @@
 package org.angelalfaro.university_library.controller;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.angelalfaro.university_library.dto.Auth.AuthResponse;
 import org.angelalfaro.university_library.dto.Auth.LoginRequest;
 import org.angelalfaro.university_library.dto.Auth.RegisterRequest;
@@ -12,10 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthServiceImpl authService;
+
+    public AuthController(AuthServiceImpl authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {

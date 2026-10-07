@@ -14,8 +14,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Prestamo {
 
     @Id
@@ -41,4 +39,77 @@ public class Prestamo {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private EstadoPrestamo estado = EstadoPrestamo.ACTIVO;
+
+    public Prestamo(Long id, Usuario usuario, Libro libro, LocalDate fechaPrestamo, LocalDate fechaDevolucionEsperada, LocalDate fechaDevolucionReal, EstadoPrestamo estado) {
+        this.id = id;
+        this.usuario = usuario;
+        this.libro = libro;
+        this.fechaPrestamo = fechaPrestamo;
+        this.fechaDevolucionEsperada = fechaDevolucionEsperada;
+        this.fechaDevolucionReal = fechaDevolucionReal;
+        this.estado = estado;
+    }
+
+    public static PrestamoBuilder builder() {
+        return new PrestamoBuilder();
+    }
+
+    public static class PrestamoBuilder {
+        private Long id;
+        private Usuario usuario;
+        private Libro libro;
+        private LocalDate fechaPrestamo;
+        private LocalDate fechaDevolucionEsperada;
+        private LocalDate fechaDevolucionReal;
+        private EstadoPrestamo estado;
+
+        PrestamoBuilder() {
+        }
+
+        public PrestamoBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public PrestamoBuilder usuario(Usuario usuario) {
+            this.usuario = usuario;
+            return this;
+        }
+
+        public PrestamoBuilder libro(Libro libro) {
+            this.libro = libro;
+            return this;
+        }
+
+        public PrestamoBuilder fechaPrestamo(LocalDate fechaPrestamo) {
+            this.fechaPrestamo = fechaPrestamo;
+            return this;
+        }
+
+        public PrestamoBuilder fechaDevolucionEsperada(LocalDate fechaDevolucionEsperada) {
+            this.fechaDevolucionEsperada = fechaDevolucionEsperada;
+            return this;
+        }
+
+        public PrestamoBuilder fechaDevolucionReal(LocalDate fechaDevolucionReal) {
+            this.fechaDevolucionReal = fechaDevolucionReal;
+            return this;
+        }
+
+        public PrestamoBuilder estado(EstadoPrestamo estado) {
+            this.estado = estado;
+            return this;
+        }
+
+        public Prestamo build() {
+            return new Prestamo(id, usuario, libro, fechaPrestamo, fechaDevolucionEsperada, fechaDevolucionReal, estado);
+        }
+
+        @Override
+        public String toString() {
+            return "Prestamo.PrestamoBuilder(id=" + id + ", usuario=" + usuario + ", libro=" + libro
+                    + ", fechaPrestamo=" + fechaPrestamo + ", fechaDevolucionEsperada=" + fechaDevolucionEsperada
+                    + ", fechaDevolucionReal=" + fechaDevolucionReal + ", estado=" + estado + ")";
+        }
+    }
 }

@@ -18,8 +18,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Usuario implements UserDetails {
 
     @Id
@@ -43,6 +41,15 @@ public class Usuario implements UserDetails {
     @Column(nullable = false, length = 20)
     private Rol rol = Rol.LECTOR;
 
+    public Usuario(Long id, String nombre, String email, String password, EstadoUsuario estado, Rol rol) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
+        this.password = password;
+        this.estado = estado;
+        this.rol = rol;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + rol.name()));
@@ -64,4 +71,60 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isEnabled() { return true; }
+
+    public static UsuarioBuilder builder() {
+        return new UsuarioBuilder();
+    }
+
+    public static class UsuarioBuilder {
+        private Long id;
+        private String nombre;
+        private String email;
+        private String password;
+        private EstadoUsuario estado;
+        private Rol rol;
+
+        UsuarioBuilder() {
+        }
+
+        public UsuarioBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UsuarioBuilder nombre(String nombre) {
+            this.nombre = nombre;
+            return this;
+        }
+
+        public UsuarioBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UsuarioBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UsuarioBuilder estado(EstadoUsuario estado) {
+            this.estado = estado;
+            return this;
+        }
+
+        public UsuarioBuilder rol(Rol rol) {
+            this.rol = rol;
+            return this;
+        }
+
+        public Usuario build() {
+            return new Usuario(id, nombre, email, password, estado, rol);
+        }
+
+        @Override
+        public String toString() {
+            return "Usuario.UsuarioBuilder(id=" + id + ", nombre=" + nombre + ", email=" + email + ", password=" + password
+                    + ", estado=" + estado + ", rol=" + rol + ")";
+        }
+    }
 }
