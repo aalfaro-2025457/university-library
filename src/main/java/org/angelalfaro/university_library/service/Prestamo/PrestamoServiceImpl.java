@@ -1,7 +1,6 @@
 package org.angelalfaro.university_library.service.Prestamo;
 
 
-import lombok.RequiredArgsConstructor;
 import org.angelalfaro.university_library.dto.Prestamo.PrestamoRequestDto;
 import org.angelalfaro.university_library.dto.Prestamo.PrestamoResponseDto;
 import org.angelalfaro.university_library.entity.Libro;
@@ -22,12 +21,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class PrestamoServiceImpl implements IPrestamoService {
 
     private final PrestamoRepository prestamoRepository;
     private final LibroRepository libroRepository;
     private final UsuarioRepository usuarioRepository;
+
+    public PrestamoServiceImpl(PrestamoRepository prestamoRepository, LibroRepository libroRepository, UsuarioRepository usuarioRepository) {
+        this.prestamoRepository = prestamoRepository;
+        this.libroRepository = libroRepository;
+        this.usuarioRepository = usuarioRepository;
+    }
 
     @Override
     @Transactional

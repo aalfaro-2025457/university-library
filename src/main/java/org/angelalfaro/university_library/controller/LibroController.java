@@ -1,7 +1,6 @@
 package org.angelalfaro.university_library.controller;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.angelalfaro.university_library.dto.Libro.LibroRequestDto;
 import org.angelalfaro.university_library.dto.Libro.LibroResponseDto;
 import org.angelalfaro.university_library.service.Libro.LibroServiceImpl;
@@ -13,10 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/libros")
-@RequiredArgsConstructor
 public class LibroController {
 
     private final LibroServiceImpl libroService;
+
+    public LibroController(LibroServiceImpl libroService) {
+        this.libroService = libroService;
+    }
 
     @GetMapping
     public ResponseEntity<Page<LibroResponseDto>> getAllLibros(

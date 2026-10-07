@@ -1,7 +1,6 @@
 package org.angelalfaro.university_library.service.Libro;
 
 
-import lombok.RequiredArgsConstructor;
 import org.angelalfaro.university_library.dto.Libro.LibroRequestDto;
 import org.angelalfaro.university_library.dto.Libro.LibroResponseDto;
 import org.angelalfaro.university_library.entity.Libro;
@@ -13,15 +12,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 public class LibroServiceImpl implements ILibroService {
 
     private final LibroRepository libroRepository;
 
+    public LibroServiceImpl(LibroRepository libroRepository) {
+        this.libroRepository = libroRepository;
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Page<LibroResponseDto> findAll(String titulo, String categoria, Pageable pageable) {
-        return libroRepository.findByFilters(titulo, categoria, pageable)
+        // El patrón LIKE se construye aquí para no depender de CONCAT() en el JPQL:
+        // Hibernate 7 lo traduce a '||' de PostgreSQL y, combinado con lower(),
+        // causa el error "function lower(bytea) does not exist".
+        String tituloPattern = (titulo == null || titulo.isBlank()) ? null : "%" + titulo.trim() + "%";
+        return libroRepository.findByFilters(tituloPattern, categoria, pageable)
                 .map(this::mapToDto);
     }
 
